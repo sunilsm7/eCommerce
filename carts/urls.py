@@ -8,5 +8,5 @@ from .views import (
 
 urlpatterns = [
     url(r'^$', cart_home, name='home'),
-    url(r'^update/$', cart_update, name='update')
+    url(r'^update/$', cart_update, name='update'),
 ]
