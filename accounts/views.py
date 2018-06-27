@@ -2,40 +2,28 @@ from django.contrib.auth import authenticate, login, get_user_model
 from django.http import HttpResponse
 from django.shortcuts import render,redirect
 from django.utils.http import is_safe_url
-from .forms import ContactForm, LoginForm, RegisterForm
+from .forms import LoginForm, RegisterForm, GuestForm
+from .models import GuestEmail
 
-def home_page(request):
+
+def guest_register_view(request):
+    form = GuestForm(request.POST or None)
     context = {
-        "title":"Hello World!",
-        "content":" Welcome to the homepage.",
-
+        "form": form
     }
-    if request.user.is_authenticated():
-        context["premium_content"] = "YEAHHHHHH"
-    return render(request, "home_page.html", context)
+    next_ = request.GET.get('next')
+    next_post = request.POST.get('next')
+    redirect_path = next_ or next_post or None
 
-def about_page(request):
-    context = {
-        "title":"About Page",
-        "content":" Welcome to the about page."
-    }
-    return render(request, "home_page.html", context)
-
-def contact_page(request):
-    contact_form = ContactForm(request.POST or None)
-    context = {
-        "title":"Contact",
-        "content":" Welcome to the contact page.",
-        "form": contact_form,
-    }
-    if contact_form.is_valid():
-        print(contact_form.cleaned_data)
-    # if request.method == "POST":
-    #     #print(request.POST)
-    #     print(request.POST.get('fullname'))
-    #     print(request.POST.get('email'))
-    #     print(request.POST.get('content'))
-    return render(request, "contact/view.html", context)
+    if form.is_valid():
+        email = form.cleaned_data.get("email")
+        new_guest_email = GuestEmail.objects.create(email=email)
+        request.session['guest_email_id'] = new_guest_email.id
+        if is_safe_url(redirect_path, request.get_host()):
+            return redirect(redirect_path)
+        else:
+            return redirect("/register/")
+    return redirect("/register/")
 
 
 def login_page(request):
@@ -65,6 +53,7 @@ def login_page(request):
 
 
 User = get_user_model()
+
 def register_page(request):
     form = RegisterForm(request.POST or None)
     context = {
