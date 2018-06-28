@@ -17,7 +17,7 @@ ORDER_STATUS_CHOICES = (
 )
 
 
-class OrderManager(models.Model):
+class OrderManager(models.Manager):
     def new_or_get(self, billing_profile, cart_obj):
         created = False
         qs = self.get_queryset().filter(
