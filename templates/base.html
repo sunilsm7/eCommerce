@@ -21,7 +21,6 @@
           let productForm = $(".form-product-ajax") // #form-product-ajax
           productForm.submit(function(event){
             event.preventDefault();
-            console.log("Form is not sending");
 
             let thisForm = $(this);
             let actionEndPoint = thisForm.attr("action");
@@ -37,6 +36,13 @@
             ajaxCall.done(function(data){
               console.log("success");
               console.log(data);
+              let submitSpan = thisForm.find('.submit-span');
+              if(data.added){
+                submitSpan.html("In cart <button type='submit' class='btn btn-info'>Remove?</button>");
+              } else {
+                submitSpan.html("<button type='submit'  class='btn btn-success'>Add to cart</button>");
+              }
+
             });
             
             ajaxCall.fail(function(errorData){
