@@ -15,8 +15,37 @@
       {% block content %}{% endblock %}
     </div>
 
+      {% include 'base/js.html' %}
+      <script type="text/javascript">
+        $(document).ready(function(){
+          let productForm = $(".form-product-ajax") // #form-product-ajax
+          productForm.submit(function(event){
+            event.preventDefault();
+            console.log("Form is not sending");
 
+            let thisForm = $(this);
+            let actionEndPoint = thisForm.attr("action");
+            let httpMethod = thisForm.attr("method");
+            let formData = thisForm.serialize();
 
-        {% include 'base/js.html' %}
+            let ajaxCall = $.ajax({
+              url: actionEndPoint,
+              method: httpMethod,
+              data: formData,
+            });
+            
+            ajaxCall.done(function(data){
+              console.log("success");
+              console.log(data);
+            });
+            
+            ajaxCall.fail(function(errorData){
+              console.log("error");
+              console.log(errorData);
+            });
+
+          });
+        });
+      </script>
     </body>
   </html>

@@ -1,5 +1,7 @@
 import logging
+import json
 from django.shortcuts import render, redirect
+from django.http import JsonResponse
 from products.models import Product
 from accounts.forms import LoginForm, GuestForm
 from billing.models import BillingProfile
@@ -19,6 +21,12 @@ def cart_home(request):
 
 def cart_update(request):
     product_id = request.POST.get('product_id')
+    if request.is_ajax():
+        data = request.POST;
+        print('warning')
+        logger.warning("Ajax request")
+        return JsonResponse({'data': json.dumps(data)})
+
     if product_id is not None:
         try:
             product_obj = Product.objects.get(id=product_id)
