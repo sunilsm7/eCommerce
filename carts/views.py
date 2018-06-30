@@ -13,6 +13,17 @@ from addresses.models import Address
 logger = logging.getLogger(__name__)
 
 
+def cart_detail_api_view(request):
+    cart_obj, new_obj = Cart.objects.new_or_get(request)
+    # products = [{"name": x.name, "price": x.price} for x in cart_obj.products.all()]
+    product_list = []
+    for x in cart_obj.products.all():
+        product_list.append({"name": x.name, "price": x.price})
+    cart_data = {"products": product_list, "subtotal": cart_obj.subtotal, "total": cart_obj.total}
+    logger.warning(cart_data)
+    return JsonResponse(cart_data)
+
+
 def cart_home(request):
     cart_obj, new_obj = Cart.objects.new_or_get(request)
     return render(request, "carts/home.html", {"cart": cart_obj})
@@ -42,7 +53,8 @@ def cart_update(request):
             logger.warning('ajax request')
             json_data = {
                 "added": added,
-                "removed": not added
+                "removed": not added,
+                "cartItemCount": cart_obj.products.count()
             }
             return JsonResponse(json_data)
 
