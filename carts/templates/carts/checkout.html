@@ -38,11 +38,14 @@
       </div>
 
     {% else %}
-      <h1>Checkout</h1>
+       <h1>Finalize Checkout</h1>
 
       <p>Cart Total: {{ object.cart.total }}</p>
       <p>Shipping Total: {{ object.shipping_total }}</p>
       <p>Order Total: {{ object.total }}</p>
+      <form class='form' method='POST' action="">{% csrf_token %}
+        <button type='submit' class="btn btn-success">Checkout</button>
+      </form>
     {% endif %}
   {% endif %}
 
