@@ -1,7 +1,7 @@
 # from django.views import ListView
 from django.http import Http404
 from django.views.generic import ListView, DetailView
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render
 
 from carts.models import Cart
 from .models import Product
@@ -11,7 +11,7 @@ class ProductFeaturedListView(ListView):
     template_name = "products/list.html"
 
     def get_queryset(self, *args, **kwargs):
-        request = self.request
+        # request = self.request
         return Product.objects.all().featured()
 
 
@@ -24,7 +24,6 @@ class ProductFeaturedDetailView(DetailView):
     #     return Product.objects.featured()
 
 
-
 class ProductListView(ListView):
     template_name = "products/list.html"
 
@@ -34,7 +33,7 @@ class ProductListView(ListView):
     #     return context
 
     def get_queryset(self, *args, **kwargs):
-        request = self.request
+        # request = self.request
         return Product.objects.all()
 
 
@@ -44,7 +43,6 @@ def product_list_view(request):
         'object_list': queryset
     }
     return render(request, "products/list.html", context)
-
 
 
 class ProductDetailSlugView(DetailView):
@@ -58,9 +56,9 @@ class ProductDetailSlugView(DetailView):
         return context
 
     def get_object(self, *args, **kwargs):
-        request = self.request
+        # request = self.request
         slug = self.kwargs.get('slug')
-        #instance = get_object_or_404(Product, slug=slug, active=True)
+        # instance = get_object_or_404(Product, slug=slug, active=True)
         try:
             instance = Product.objects.get(slug=slug, active=True)
         except Product.DoesNotExist:
@@ -68,14 +66,13 @@ class ProductDetailSlugView(DetailView):
         except Product.MultipleObjectsReturned:
             qs = Product.objects.filter(slug=slug, active=True)
             instance = qs.first()
-        except:
+        except Exception:
             raise Http404("Uhhmmm ")
         return instance
 
 
-
 class ProductDetailView(DetailView):
-    #queryset = Product.objects.all()
+    # queryset = Product.objects.all()
     template_name = "products/detail.html"
 
     def get_context_data(self, *args, **kwargs):
@@ -85,7 +82,7 @@ class ProductDetailView(DetailView):
         return context
 
     def get_object(self, *args, **kwargs):
-        request = self.request
+        # request = self.request
         pk = self.kwargs.get('pk')
         instance = Product.objects.get_by_id(pk)
         if instance is None:
@@ -112,7 +109,7 @@ def product_detail_view(request, pk=None, *args, **kwargs):
     instance = Product.objects.get_by_id(pk)
     if instance is None:
         raise Http404("Product doesn't exist")
-    #print(instance)
+    # print(instance)
     # qs  = Product.objects.filter(id=pk)
 
     # #print(qs)

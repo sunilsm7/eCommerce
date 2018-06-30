@@ -72,6 +72,7 @@ def pre_save_create_order_id(sender, instance, *args, **kwargs):
     if qs.exists():
         qs.update(active=False)
 
+
 pre_save.connect(pre_save_create_order_id, sender=Order)
 
 
@@ -80,7 +81,7 @@ pre_save.connect(pre_save_create_order_id, sender=Order)
 def post_save_cart_total(sender, instance, created, *args, **kwargs):
     if not created:
         cart_obj = instance
-        cart_total = cart_obj.total
+        cart_total = cart_obj.total # noqa
         cart_id = cart_obj.id
         qs = Order.objects.filter(cart__id=cart_id)
         if qs.count() == 1:
@@ -96,5 +97,6 @@ def post_save_order(sender, instance, created, *args, **kwargs):
     if created:
         logger.info("Updating ...first")
         instance.update_total()
+
 
 post_save.connect(post_save_order, sender=Order)

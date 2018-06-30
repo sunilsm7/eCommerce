@@ -23,7 +23,7 @@ class BillingProfileManager(models.Manager):
         else:
             pass
         return obj, created
-            
+
 
 class BillingProfile(models.Model):
     user = models.OneToOneField(User, null=True, blank=True)
@@ -34,7 +34,7 @@ class BillingProfile(models.Model):
     # customer_id in Stripe or Braintree
 
     objects = BillingProfileManager()
-    
+
     def __str__(self):
         return self.email
 
