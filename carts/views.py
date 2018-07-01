@@ -41,9 +41,8 @@ def cart_update(request):
         try:
             product_obj = Product.objects.get(id=product_id)
         except Product.DoesNotExist:
-            logger.warning("Show message to user, product is gone?")
+            print("Show message to user, product is gone?")
             return redirect("cart:home")
-
         cart_obj, new_obj = Cart.objects.new_or_get(request)
         if product_obj in cart_obj.products.all():
             cart_obj.products.remove(product_obj)
@@ -51,18 +50,16 @@ def cart_update(request):
         else:
             cart_obj.products.add(product_obj)  # cart_obj.products.add(product_id)
             added = True
-
         request.session['cart_items'] = cart_obj.products.count()
-        # ajaxify cart update
-        if request.is_ajax():
-            logger.warning('ajax request')
+        # return redirect(product_obj.get_absolute_url())
+        if request.is_ajax():  # Asynchronous JavaScript And XML / JSON
+            print("Ajax request")
             json_data = {
                 "added": added,
                 "removed": not added,
                 "cartItemCount": cart_obj.products.count()
             }
-            return JsonResponse(json_data, status=200)
-
+            return JsonResponse(json_data, status=200)  # HttpResponse
     return redirect("cart:home")
 
 
