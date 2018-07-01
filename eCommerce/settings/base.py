@@ -48,6 +48,11 @@ INSTALLED_APPS = [
     'billing',
 ]
 
+
+#changes the built-in user model to ours
+AUTH_USER_MODEL = 'accounts.User'
+
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
