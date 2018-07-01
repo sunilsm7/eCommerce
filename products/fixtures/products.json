@@ -1,0 +1,142 @@
+[
+{
+    "model": "products.product",
+    "pk": 1,
+    "fields": {
+        "title": "nokia 8 serocco",
+        "slug": "nokia-8-serocco",
+        "description": "nokia 8 serocco",
+        "price": "49900.00",
+        "image": "",
+        "featured": true,
+        "active": true,
+        "timestamp": "2018-06-25T05:23:19.270Z"
+    }
+},
+{
+    "model": "products.product",
+    "pk": 2,
+    "fields": {
+        "title": "nokia 7 plus",
+        "slug": "nokia-7-plus",
+        "description": "nokia 7 plus",
+        "price": "25999.00",
+        "image": "",
+        "featured": false,
+        "active": true,
+        "timestamp": "2018-06-25T05:23:35.495Z"
+    }
+},
+{
+    "model": "products.product",
+    "pk": 3,
+    "fields": {
+        "title": "samsung galaxy J6",
+        "slug": "samsung-galaxy-j6",
+        "description": "samsung galaxy J6",
+        "price": "15000.00",
+        "image": "",
+        "featured": true,
+        "active": true,
+        "timestamp": "2018-06-25T05:23:54.814Z"
+    }
+},
+{
+    "model": "products.product",
+    "pk": 4,
+    "fields": {
+        "title": "Redmi Note 5 Pro",
+        "slug": "redmi-note-5-pro",
+        "description": "Redmi Note 5 Pro",
+        "price": "15000.00",
+        "image": "",
+        "featured": true,
+        "active": true,
+        "timestamp": "2018-06-25T05:24:12.767Z"
+    }
+},
+{
+    "model": "products.product",
+    "pk": 5,
+    "fields": {
+        "title": "Nokia 6.1 2018",
+        "slug": "nokia-61-2018",
+        "description": "Nokia 6.1 2018",
+        "price": "16000.00",
+        "image": "",
+        "featured": false,
+        "active": true,
+        "timestamp": "2018-06-28T05:29:21.118Z"
+    }
+},
+{
+    "model": "products.product",
+    "pk": 6,
+    "fields": {
+        "title": "Lenovo ideapad 320",
+        "slug": "lenovo-ideapad-320",
+        "description": "Lenovo ideapad 320",
+        "price": "32000.00",
+        "image": "",
+        "featured": false,
+        "active": true,
+        "timestamp": "2018-06-28T05:29:40.454Z"
+    }
+},
+{
+    "model": "products.product",
+    "pk": 7,
+    "fields": {
+        "title": "Samsung 32GB memory card",
+        "slug": "samsung-32gb-memory-card",
+        "description": "Samsung 32GB memory card\r\nclass 10",
+        "price": "800.00",
+        "image": "",
+        "featured": false,
+        "active": true,
+        "timestamp": "2018-06-28T05:30:21.600Z"
+    }
+},
+{
+    "model": "products.product",
+    "pk": 8,
+    "fields": {
+        "title": "samsung galaxy J8",
+        "slug": "samsung-galaxy-j8",
+        "description": "samsung galaxy J8\r\n\r\n4GB RAM, 64GB ROM,\r\nRear Dual Camera,\r\n16 mp front camera",
+        "price": "19000.00",
+        "image": "",
+        "featured": true,
+        "active": true,
+        "timestamp": "2018-06-30T09:49:18.693Z"
+    }
+},
+{
+    "model": "products.product",
+    "pk": 9,
+    "fields": {
+        "title": "Honor 9 lite",
+        "slug": "honor-9-lite",
+        "description": "4 GB RAM | 64 GB ROM | Expandable Upto 256 GB5.65 inch FHD+ Display13MP + 2MP Dual Rear Camera | 13MP + 2MP Dual Front Camera3000 mAh BatteryKirin 659 ProcessorFace UnlockRide Mode12 Months on handset, 6 Months on battery , 6 Months on charger & 3 Months on data cable\r\n\r\n\u20b914,999\r\n\u20b916,999\r\n11% off\r\nUp to \u20b912,200 Off on Exchange\r\nEMI starting from \u20b9499/month\r\nOffers\r\n\r\n    No Cost EMI\r\n    Special Price",
+        "price": "14999.00",
+        "image": "products/3803997492/3803997492.jpeg",
+        "featured": false,
+        "active": true,
+        "timestamp": "2018-07-01T04:50:10.059Z"
+    }
+},
+{
+    "model": "products.product",
+    "pk": 10,
+    "fields": {
+        "title": "Moto G6 2018",
+        "slug": "moto-g6-2018",
+        "description": "Moto G6 2018",
+        "price": "14000.00",
+        "image": "",
+        "featured": false,
+        "active": true,
+        "timestamp": "2018-07-01T04:51:52.590Z"
+    }
+}
+]
