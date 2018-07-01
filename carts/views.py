@@ -15,11 +15,16 @@ logger = logging.getLogger(__name__)
 
 def cart_detail_api_view(request):
     cart_obj, new_obj = Cart.objects.new_or_get(request)
-    # products = [{"name": x.name, "price": x.price} for x in cart_obj.products.all()]
-    product_list = []
-    for x in cart_obj.products.all():
-        product_list.append({"name": x.name, "price": x.price})
-    cart_data = {"products": product_list, "subtotal": cart_obj.subtotal, "total": cart_obj.total}
+    products_list = [
+        {
+            "id": x.id,
+            "url": x.get_absolute_url(),
+            "name": x.name,
+            "price": x.price
+        } for x in cart_obj.products.all()
+    ]
+
+    cart_data = {"products": products_list, "subtotal": cart_obj.subtotal, "total": cart_obj.total}
     logger.warning(cart_data)
     return JsonResponse(cart_data)
 
@@ -36,7 +41,7 @@ def cart_update(request):
         try:
             product_obj = Product.objects.get(id=product_id)
         except Product.DoesNotExist:
-            logger.info("Show message to user, product is gone?")
+            logger.warning("Show message to user, product is gone?")
             return redirect("cart:home")
 
         cart_obj, new_obj = Cart.objects.new_or_get(request)
