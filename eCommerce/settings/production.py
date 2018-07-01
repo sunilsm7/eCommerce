@@ -21,12 +21,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__fil
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'i@d!svywkc-jx7d++mj&dr=oc5w-ntlp=vh6*6#bkd8i)!#h)-'
+SECRET_KEY = os.environ.get('SECRET_KEY', 'i@d!svywkc-jx7d++mj&dr=oc5w-ntlp=vh6*6#bkd8i)!#h)-')  
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['ecommerce-shop.herokuapp.com',]
 
 
 # Application definition
@@ -89,6 +89,11 @@ DATABASES = {
     }
 }
 
+# add this
+import dj_database_url
+db_from_env = dj_database_url.config()
+DATABASES['default'].update(db_from_env)
+DATABASES['default']['CONN_MAX_AGE'] = 500
 
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
