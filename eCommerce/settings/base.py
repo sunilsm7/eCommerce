@@ -49,7 +49,7 @@ INSTALLED_APPS = [
 ]
 
 
-#changes the built-in user model to ours
+# changes the built-in user model to ours
 AUTH_USER_MODEL = 'accounts.User'
 
 

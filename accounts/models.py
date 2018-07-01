@@ -4,6 +4,7 @@ from django.contrib.auth.models import (
 )
 # Create your models here.
 
+
 class UserManager(BaseUserManager):
     def create_user(self, email, password=None, is_active=True, is_staff=False, is_admin=False):
         if not email:
@@ -12,7 +13,7 @@ class UserManager(BaseUserManager):
             raise ValueError("Users must have a password")
 
         user_obj = self.model(
-            email = self.normalize_email(email)
+            email=self.normalize_email(email)
         )
         user_obj.set_password(password)  # chanage user password
         user_obj.staff = is_staff
@@ -23,7 +24,7 @@ class UserManager(BaseUserManager):
 
     def create_staff_user(self, email, password=None):
         user = self.create_user(
-            email, 
+            email,
             password=password,
             is_staff=True
         )
@@ -31,14 +32,12 @@ class UserManager(BaseUserManager):
 
     def create_superuser(self, email, password=None):
         user = self.create_user(
-            email, 
+            email,
             password=password,
             is_staff=True,
             is_admin=True
         )
         return user
-
-
 
 
 class User(AbstractBaseUser):
@@ -51,7 +50,7 @@ class User(AbstractBaseUser):
     # confirm = models.BooleanField(default=False)
     # confirmed_date = models.DateTimeField(default=False)
 
-    USERNAME_FIELD = 'email'  #username
+    USERNAME_FIELD = 'email'  # username
     # USERNAME_FIELD and password are required by default
 
     objects = UserManager()
@@ -82,7 +81,7 @@ class User(AbstractBaseUser):
     @property
     def is_admin(self):
         return self.admin
-    
+
     @property
     def is_active(self):
         return self.active
