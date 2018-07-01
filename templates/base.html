@@ -18,6 +18,64 @@
       {% include 'base/js.html' %}
       <script type="text/javascript">
         $(document).ready(function(){
+          // Contact Form Handler
+          let contactForm = $(".contact-form")
+          let contactFormMethod = contactForm.attr("method")
+          let contactFormEndpoint = contactForm.attr("action") // /abc/
+
+
+          function displaySubmitting(submitBtn, defaultText, doSubmit){
+            if (doSubmit){
+              submitBtn.addClass("disabled")
+              submitBtn.html("<i class='fa fa-spin fa-spinner'></i> Sending...")
+            } else {
+              submitBtn.removeClass("disabled")
+              submitBtn.html(defaultText)
+            }
+            
+          }
+          contactForm.submit(function(event){
+            event.preventDefault()
+            let contactFormSubmitBtn = contactForm.find("[type='submit']")
+            let contactFormSubmitBtnTxt = contactFormSubmitBtn.text()
+            var contactFormData = contactForm.serialize()
+            let thisForm = $(this)
+            displaySubmitting(contactFormSubmitBtn, "", true)
+            $.ajax({
+              method: contactFormMethod,
+              url:  contactFormEndpoint,
+              data: contactFormData,
+              success: function(data){
+                contactForm[0].reset()
+                $.alert({
+                  title: "Success!",
+                  content: data.message,
+                  theme: "modern",
+                })
+                setTimeout(function(){
+                  displaySubmitting(contactFormSubmitBtn, contactFormSubmitBtnTxt, false)
+                }, 500)
+              },
+              error: function(error){
+                console.log(error.responseJSON)
+                let jsonData = error.responseJSON
+                let msg = ""
+                $.each(jsonData, function(key, value){ // key, value  array index / object
+                  msg += key + ": " + value[0].message + "<br/>"
+                })
+                $.alert({
+                  title: "Oops!",
+                  content: msg,
+                  theme: "modern",
+                })
+                setTimeout(function(){
+                  displaySubmitting(contactFormSubmitBtn, contactFormSubmitBtnTxt, false)
+                }, 500)
+              }
+            })
+          })
+
+
           // Auto Search
           let searchForm = $(".search-form");
           let searchInput = searchForm.find("[name='q']");
