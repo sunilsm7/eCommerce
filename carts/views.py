@@ -1,16 +1,25 @@
 import logging
+import stripe
+from django.conf import settings
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
-from products.models import Product
-from accounts.forms import LoginForm, GuestForm
+
+from addresses.models import Address
 from billing.models import BillingProfile
 from orders.models import Order
+from products.models import Product
 from .models import Cart
+
+from accounts.forms import LoginForm, GuestForm
 from addresses.forms import AddressForm
-from addresses.models import Address
+
 
 # Create your views here.
 logger = logging.getLogger(__name__)
+
+STRIPE_SECRET_KEY = getattr(settings, "STRIPE_SECRET_KEY", "sk_test_0bfLJF5yaMsFBrcGsCYsVWnP")
+STRIPE_PUB_KEY = getattr(settings, "STRIPE_PUB_KEY", 'pk_test_bfLAv5Zn1FE5sa7hQepI4BOG')
+stripe.api_key = STRIPE_SECRET_KEY
 
 
 def cart_detail_api_view(request):
@@ -77,6 +86,7 @@ def checkout_home(request):
 
     billing_profile, billing_profile_created = BillingProfile.objects.new_or_get(request)
     address_qs = None
+    has_card = False
 
     if billing_profile is not None:
         if request.user.is_authenticated():
@@ -91,6 +101,7 @@ def checkout_home(request):
             del request.session["billing_address_id"]
         if billing_address_id or shipping_address_id:
             order_obj.save()
+        has_card = billing_profile.has_card
 
     if request.method == 'POST':
         """some check that order is done"""
@@ -113,6 +124,8 @@ def checkout_home(request):
         "guest_form": guest_form,
         "address_form": address_form,
         "address_qs": address_qs,
+        "has_card": has_card,
+        "publish_key": STRIPE_PUB_KEY,
     }
 
     return render(request, "carts/checkout.html", context)
