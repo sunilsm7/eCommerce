@@ -20,12 +20,12 @@ def get_subscriber_hash(member_email):
     check_email(member_email)
     member_email = member_email.lower().encode()
     m = hashlib.md5(member_email)
-    return m.hexdiget()
+    return m.hexdigest()
 
 
-class MailChimp(object):
+class Mailchimp(object):
     def __init__(self):
-        super(MailChimp, self).__init__()
+        super(Mailchimp, self).__init__()
         self.key = MAILCHIMP_API_KEY
         self.api_url = 'https://{dc}.api.mailchimp.com/3.0'.format(
             dc=MAILCHIMP_DATA_CENTER
@@ -46,13 +46,13 @@ class MailChimp(object):
             "status": self.check_valid_status(status)
         }
         r = requests.put(endpoint, auth=("", self.key), data=json.dumps(data))
-        return r.json()
+        return r.status_code, r.json()
 
     def check_subscription_status(self, email):
         hashed_email = get_subscriber_hash(email)
         endpoint = self.get_members_endpoint() + "/" + hashed_email
         r = requests.get(endpoint, auth=("", self.key))
-        return r.json()
+        return r.status_code, r.json()
 
     def check_valid_status(self, status):
         choices = ['subscribed', 'unsubscribed', 'cleaned', 'pending']
@@ -63,10 +63,10 @@ class MailChimp(object):
     def add_email(self, email):
         return self.change_subscription_status(email, status="subscribed")
 
-    def unsunscribe(self, email):
+    def unsubscribe(self, email):
         return self.change_subscription_status(email, status="unsubscribed")
 
-    def sunscribe(self, email):
+    def subscribe(self, email):
         return self.change_subscription_status(email, status="subscribed")
 
     def pending(self, email):
