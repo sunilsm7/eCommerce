@@ -38,15 +38,16 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'analytics',
+    'accounts',
     'addresses',
+    'analytics',
+    'billing',
+    'carts',
+    'marketing',
+    'orders',
     'products',
     'search',
-    'tags',
-    'carts',
-    'orders',
-    'accounts',
-    'billing',
+    'tags'
 ]
 
 
@@ -55,6 +56,15 @@ AUTH_USER_MODEL = 'accounts.User'
 
 FORCE_SESSION_TO_ONE = False
 FORCE_INACTIVE_USER_ENDSESSION = False
+
+
+MAILCHIMP_API_KEY = "MAILCHIMP_API_KEY"
+MAILCHIMP_DATA_CENTER = "MAILCHIMP_DATA_CENTER ID"
+MAILCHIMP_EMAIL_LIST_ID = "MAILCHIMP_EMAIL_LIST_ID"
+
+
+STRIPE_SECRET_KEY = "sk_test_0bfLJF5yaMsFBrcGsCYsVWnP"
+STRIPE_PUB_KEY = 'pk_test_bfLAv5Zn1FE5sa7hQepI4BOG'
 
 
 MIDDLEWARE = [
