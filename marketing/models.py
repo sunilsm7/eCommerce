@@ -32,6 +32,7 @@ def make_marketing_pref_receiver(sender, instance, created, *args, **kwargs):
     User model
     '''
     if created:
+        logger.info("create user marketing preference profile")
         MarketingPreference.objects.get_or_create(user=instance)
 
 
