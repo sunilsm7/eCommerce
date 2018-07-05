@@ -38,24 +38,34 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'analytics',
+    'accounts',
     'addresses',
+    'analytics',
+    'billing',
+    'carts',
+    'marketing',
+    'orders',
     'products',
     'search',
-    'tags',
-    'carts',
-    'orders',
-    'accounts',
-    'billing',
+    'tags'
 ]
 
 
+# changes the built-in user model to ours
 # changes the built-in user model to ours
 AUTH_USER_MODEL = 'accounts.User'
 
 FORCE_SESSION_TO_ONE = False
 FORCE_INACTIVE_USER_ENDSESSION = False
 
+
+MAILCHIMP_API_KEY = "MAILCHIMP_API_KEY"
+MAILCHIMP_DATA_CENTER = "MAILCHIMP_DATA_CENTER ID"
+MAILCHIMP_EMAIL_LIST_ID = "MAILCHIMP_EMAIL_LIST_ID"
+
+
+STRIPE_SECRET_KEY = "sk_test_0bfLJF5yaMsFBrcGsCYsVWnP"
+STRIPE_PUB_KEY = 'pk_test_bfLAv5Zn1FE5sa7hQepI4BOG'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -152,3 +162,14 @@ STATIC_ROOT = os.path.join(BASE_DIR, "static_cdn", "static_root")
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, "static_cdn", "media_root")
+
+
+CORS_REPLACE_HTTPS_REFERER = True
+HOST_SCHEME = "https://"
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SECURE_SSL_REDIRECT = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_SECONDS = 1000000
+SECURE_FRAME_DENY = True
