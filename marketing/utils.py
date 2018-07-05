@@ -27,7 +27,7 @@ class Mailchimp(object):
     def __init__(self):
         super(Mailchimp, self).__init__()
         self.key = MAILCHIMP_API_KEY
-        self.api_url = 'https://{dc}.api.mailchimp.com/3.0'.format(
+        self.api_url = "https://{dc}.api.mailchimp.com/3.0".format(
             dc=MAILCHIMP_DATA_CENTER
         )
         self.list_id = MAILCHIMP_EMAIL_LIST_ID
@@ -43,6 +43,7 @@ class Mailchimp(object):
         hashed_email = get_subscriber_hash(email)
         endpoint = self.get_members_endpoint() + "/" + hashed_email
         data = {
+            "email_address": email,
             "status": self.check_valid_status(status)
         }
         r = requests.put(endpoint, auth=("", self.key), data=json.dumps(data))
@@ -61,13 +62,13 @@ class Mailchimp(object):
         return status
 
     def add_email(self, email):
-        return self.change_subscription_status(email, status="subscribed")
+        return self.change_subscription_status(email, status='subscribed')
 
     def unsubscribe(self, email):
-        return self.change_subscription_status(email, status="unsubscribed")
+        return self.change_subscription_status(email, status='unsubscribed')
 
     def subscribe(self, email):
-        return self.change_subscription_status(email, status="subscribed")
+        return self.change_subscription_status(email, status='subscribed')
 
     def pending(self, email):
-        return self.change_subscription_status(email, status="pending")
+        return self.change_subscription_status(email, status='pending')
